@@ -2,12 +2,16 @@ const mongoose = require("mongoose");
 
 const placeSchema = new mongoose.Schema({
   name: String,
-  slug: {
-    type: String,
-    unique: true,
-  },
+  slug: String,
   image: String,
   description: String,
+
+  status: {
+    type: String,
+    default: "pending",
+  },
+
+  createdBy: String,
 });
 
 module.exports = mongoose.model("Place", placeSchema);

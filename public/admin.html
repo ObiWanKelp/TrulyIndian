@@ -2,13 +2,135 @@
 <html>
   <head>
     <title>Admin Panel</title>
-    <link rel="stylesheet" href="/css/style-home.css" />
+
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        background: #f5f7fa;
+      }
+
+      header {
+        background: #b19cd9;
+        color: white;
+        padding: 20px;
+        font-size: 24px;
+      }
+
+      .admin-container {
+        max-width: 1100px;
+        margin: 30px auto;
+        padding: 20px;
+      }
+
+      .admin-section {
+        margin-bottom: 40px;
+      }
+
+      .admin-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: center;
+      }
+
+      .admin-card {
+        width: 300px;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        transition: 0.2s;
+      }
+
+      .admin-card:hover {
+        transform: translateY(-5px);
+      }
+
+      .admin-card img {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+      }
+
+      .admin-card-content {
+        padding: 12px;
+      }
+
+      .admin-actions {
+        display: flex;
+        gap: 10px;
+        margin-top: 10px;
+      }
+
+      .admin-actions button {
+        flex: 1;
+        padding: 8px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        color: white;
+      }
+
+      .approve {
+        background: #4caf50;
+      }
+      .reject {
+        background: #ff4d4d;
+      }
+      .delete {
+        background: #555;
+      }
+
+      .form-box {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        background: white;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      input,
+      textarea {
+        padding: 10px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+      }
+
+      button[type="submit"] {
+        background: #b19cd9;
+        color: white;
+      }
+
+      button[type="submit"] {
+        padding: 12px;
+        border: none;
+        border-radius: 10px;
+        background: #b19cd9;
+        color: white;
+        font-weight: 600;
+        cursor: pointer;
+        transition: 0.2s ease;
+      }
+
+      button[type="submit"]:hover {
+        background: #9a84c9;
+        transform: translateY(-2px);
+      }
+
+      button[type="submit"]:active {
+        transform: scale(0.98);
+      }
+    </style>
   </head>
+
   <body>
     <script src="/js/auth.js"></script>
+
     <script>
       const user = JSON.parse(localStorage.getItem("user"));
-
       if (!user || user.role !== "admin") {
         alert("Access denied ❌");
         window.location.href = "/login.html";
@@ -19,18 +141,31 @@
       <h1>Admin Panel</h1>
     </header>
 
-    <main>
-      <h2>Add New Place</h2>
+    <main class="admin-container">
+      <div class="admin-section">
+        <h2>Add New Place</h2>
 
-      <form id="placeForm" class="form-box">
-        <input type="text" id="name" placeholder="Place Name" required />
-        <input type="text" id="slug" placeholder="Slug (delhi)" required />
-        <input type="text" id="image" placeholder="Image URL" required />
-        <textarea id="description" placeholder="Description"></textarea>
-        <button type="submit">Add Place</button>
-      </form>
+        <form id="placeForm" class="form-box">
+          <input type="text" id="name" placeholder="Place Name" required />
+          <input type="text" id="slug" placeholder="Slug (delhi)" required />
+          <input type="text" id="image" placeholder="Image URL" required />
+          <textarea id="description" placeholder="Description"></textarea>
+          <button type="submit">Add Place</button>
+        </form>
+      </div>
+
+      <div class="admin-section">
+        <h2>Pending Submissions</h2>
+        <div id="pendingList" class="admin-grid"></div>
+      </div>
+
+      <div class="admin-section">
+        <h2>Approved Places</h2>
+        <div id="approvedList" class="admin-grid"></div>
+      </div>
     </main>
 
+    <!-- NEW JS FILE -->
     <script src="/js/admin.js"></script>
   </body>
 </html>

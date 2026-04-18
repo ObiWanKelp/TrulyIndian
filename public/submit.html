@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Submit Place</title>
+    <link rel="stylesheet" href="/css/style-home.css" />
+  </head>
+  <body>
+    <!-- 🔐 protect page -->
+    <script src="/js/auth.js"></script>
+
+    <header>
+      <h1>Submit a Place</h1>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="account.html">Account</a>
+        <button onclick="logout()" id="logoutBtn">Logout</button>
+      </nav>
+    </header>
+
+    <main>
+      <div class="form-box">
+        <h2>Add a New Place</h2>
+
+        <form id="placeForm" class="form-box">
+          <input type="text" id="name" placeholder="Place Name" required />
+          <input type="text" id="slug" placeholder="Slug (delhi)" required />
+          <input type="text" id="image" placeholder="Image URL" required />
+          <textarea id="description" placeholder="Description"></textarea>
+          <button type="submit">Add Place</button>
+        </form>
+
+        <p id="message"></p>
+      </div>
+    </main>
+
+    <script>
+      const form = document.getElementById("placeForm");
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const user = JSON.parse(localStorage.getItem("user"));
+
+        if (!user) {
+          alert("Please login first");
+          window.location.href = "/login.html";
+          return;
+        }
+
+        const res = await fetch("/api/places", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name: document.getElementById("name").value,
+            slug: document.getElementById("slug").value,
+            image: document.getElementById("image").value,
+            description: document.getElementById("description").value,
+            createdBy: user.email,
+          }),
+        });
+
+        const data = await res.json();
+
+        document.getElementById("message").innerText = data.message;
+
+        form.reset();
+      });
+    </script>
+  </body>
+</html>

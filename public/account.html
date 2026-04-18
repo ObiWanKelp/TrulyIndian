@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+  <head>
+    <title>My Account</title>
+    <link rel="stylesheet" href="/css/style-home.css" />
+  </head>
+  <body>
+    <!-- 🔐 protect page -->
+    <script src="/js/auth.js"></script>
+
+    <header>
+      <h1>My Account</h1>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="submit.html">Submit Place</a>
+        <button onclick="logout()" id="logoutBtn">Logout</button>
+      </nav>
+    </header>
+
+    <main>
+      <div class="form-box">
+        <h2>Account Details</h2>
+
+        <p><strong>Email:</strong> <span id="email"></span></p>
+
+        <input type="text" id="name" placeholder="Update Name" />
+        <input type="password" id="password" placeholder="New Password" />
+
+        <button onclick="updateUser()">Update Profile</button>
+
+        <hr />
+
+        <button onclick="deleteUser()" style="background-color: #ff4d4d">
+          Delete Account
+        </button>
+
+        <p id="message"></p>
+      </div>
+    </main>
+
+    <script src="/js/account.js"></script>
+  </body>
+</html>
