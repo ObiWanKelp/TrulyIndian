@@ -1,0 +1,36 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Admin Panel</title>
+    <link rel="stylesheet" href="/css/style-home.css" />
+  </head>
+  <body>
+    <script src="/js/auth.js"></script>
+    <script>
+      const user = JSON.parse(localStorage.getItem("user"));
+
+      if (!user || user.role !== "admin") {
+        alert("Access denied ❌");
+        window.location.href = "/login.html";
+      }
+    </script>
+
+    <header>
+      <h1>Admin Panel</h1>
+    </header>
+
+    <main>
+      <h2>Add New Place</h2>
+
+      <form id="placeForm" class="form-box">
+        <input type="text" id="name" placeholder="Place Name" required />
+        <input type="text" id="slug" placeholder="Slug (delhi)" required />
+        <input type="text" id="image" placeholder="Image URL" required />
+        <textarea id="description" placeholder="Description"></textarea>
+        <button type="submit">Add Place</button>
+      </form>
+    </main>
+
+    <script src="/js/admin.js"></script>
+  </body>
+</html>

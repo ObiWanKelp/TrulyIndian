@@ -1,0 +1,21 @@
+{
+  "name": "truly_indian_1-main",
+  "version": "1.0.0",
+  "description": "Basic projectttt on HTML and CSS only, first project ever. <br> Author- Aditya Sinsinwar # 🌟 Features - Responsive and clean UI   - Styled with modern fonts and colors   - Navigation bar for easy browsing   - Destination images with hover effects   - Footer with legal links and branding - First site ever - Truly Indian is mid rn next week pakka <br> # 📂 Project Structure Truly-Indian <br> │── index.html          # Main landing page <br> │── style-home.css      # Main stylesheet <br> │── about.html          # About page (to be added) <br> │── contact.html        # Contact page (to be added) <br> │── delhi.html          # Page for New Delhi <br> │── goa.html            # Page for Goa <br> └──  <br>",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^9.4.1"
+  }
+}

@@ -1,0 +1,285 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Yeseva+One&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Limelight&family=Yeseva+One&display=swap");
+html,
+body {
+  height: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  font-family: "Poppins", sans-serif;
+  color: #333333;
+  background-color: #f5f7fa; /* Light, minimal background */
+}
+
+/* Footer */
+footer {
+  margin-top: auto;
+  width: 100%;
+}
+
+/* Header */
+header h1 {
+  font-family: "Limelight", sans-serif;
+  background-color: #b19cd9;
+  padding: 20px;
+  margin: 0;
+  text-align: left;
+  font-size: 30px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+header nav {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  background-color: #b19cd9;
+  font-size: 18px;
+}
+
+header nav a {
+  text-decoration: none;
+  font-weight: 400;
+  font-size: 18px;
+  color: #ffffff;
+  transition:
+    color 0.3s ease,
+    transform 0.2s ease;
+}
+
+header nav a:hover {
+  transform: scale(1.1);
+  color: #ff6b6b; /* Coral Red for pop */
+}
+
+/* Main Content */
+.hero h1 {
+  font-family: "Texturina", serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+.hero h2 {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+main {
+  background-color: #ffffff;
+  color: #333333;
+  text-align: center;
+}
+
+/* Destinations */
+.destinations a {
+  text-decoration: none;
+  color: #333333;
+  font-size: 20px;
+  font-weight: 400;
+}
+
+.destinations article {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  margin: 20px;
+  padding: 10px;
+  background-color: #f5f7fa;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+  width: 320px;
+  overflow: hidden;
+}
+
+.destinations p {
+  font-family: "Texturina", serif;
+  color: #333333;
+  font-weight: 600;
+}
+
+.destinations {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.destinations article img {
+  width: 100%;
+  height: 200px; /* 👈 controls landscape height */
+  object-fit: cover; /* 👈 crops image nicely */
+  border-radius: 15px;
+}
+article {
+  text-align: center;
+}
+
+article a img {
+  border-radius: 15px;
+  transition: transform 0.3s ease;
+}
+
+article a:hover img {
+  transform: scale(1.1);
+}
+
+/* Social Section */
+.social {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  gap: 20px;
+}
+
+.social p {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+  color: #b19cd9;
+}
+
+.social a img {
+  width: 30px;
+  height: auto;
+  border-radius: 50%;
+  transition: transform 0.2s ease;
+}
+
+.social a:hover img {
+  transform: scale(1.1);
+  filter: brightness(1.2);
+}
+
+/* Footer */
+.Rights {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 15px;
+  background-color: #22223b; /* Deep Purple */
+  color: #f5f7fa;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+/* Footer Links */
+.Rights a {
+  color: #ff6b6b; /* Coral Red */
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.Rights a:hover {
+  color: #ffffff; /* Pure white on hover */
+}
+
+/* Base styles remain unchanged */
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  /* Header adjustments */
+  header h1 {
+    font-size: 24px;
+    text-align: left;
+  }
+
+  header nav {
+    flex-wrap: wrap; /* Wrap navigation links */
+  }
+
+  header nav a {
+    margin: 5px;
+  }
+
+  /* Main Content */
+  .hero h1,
+  .hero h2 {
+    font-size: 20px;
+    padding: 5px;
+  }
+
+  /* Destinations Section */
+  .destinations {
+    flex-direction: column; /* Stack articles vertically */
+  }
+
+  .destinations article {
+    width: 90%; /* Fit within mobile screens */
+    margin: 10px auto;
+  }
+
+  article a img {
+    width: 100%; /* Scale images to fit container */
+    max-width: 400px; /* Optional: Set a maximum width for images */
+    height: auto; /* Maintain aspect ratio */
+  }
+
+  /* Social Section */
+  .social {
+    flex-wrap: wrap; /* Wrap icons */
+    gap: 10px;
+  }
+
+  .social a img {
+    width: 40px; /* Slightly larger for better visibility */
+    height: auto; /* Maintain aspect ratio */
+  }
+
+  /* Footer */
+  .Rights {
+    font-size: 14px; /* Adjust font size for mobile */
+  }
+}
+
+.form-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 50px auto;
+  padding: 30px;
+  width: 300px;
+  background-color: #f5f7fa;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+}
+
+.form-box input {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.form-box button {
+  padding: 10px;
+  width: 100%;
+  border: none;
+  border-radius: 8px;
+  background-color: #b19cd9;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.form-box button:hover {
+  background-color: #9a84c9;
+}
+
+#logoutBtn {
+  padding: 8px 12px;
+  background-color: #ff6b6b;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+#logoutBtn:hover {
+  background-color: #e05555;
+}
