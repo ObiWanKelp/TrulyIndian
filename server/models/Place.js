@@ -1,5 +1,10 @@
 const mongoose = require("mongoose");
 
+const ratingSchema = new mongoose.Schema({
+  userEmail: String,
+  stars: Number,
+});
+
 const subPlaceSchema = new mongoose.Schema({
   name: String,
   image: String,
@@ -9,6 +14,18 @@ const subPlaceSchema = new mongoose.Schema({
   status: {
     type: String,
     default: "pending",
+  },
+
+  ratings: [ratingSchema],
+
+  avgRating: {
+    type: Number,
+    default: 0,
+  },
+
+  totalRatings: {
+    type: Number,
+    default: 0,
   },
 });
 

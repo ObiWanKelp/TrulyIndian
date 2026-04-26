@@ -290,6 +290,66 @@ router.delete("/delete-subplace/:placeId/:subId", async (req, res) => {
     });
   }
 });
+router.post("/rate/:placeId/:subId", async (req, res) => {
+  try {
+    const { userEmail, stars } = req.body;
+
+    if (!userEmail || !stars) {
+      return res.status(400).json({
+        message: "Missing data",
+      });
+    }
+
+    const place = await Place.findById(req.params.placeId);
+
+    if (!place) {
+      return res.status(404).json({
+        message: "Place not found",
+      });
+    }
+
+    const sub = place.subplaces.id(req.params.subId);
+
+    if (!sub) {
+      return res.status(404).json({
+        message: "Subplace not found",
+      });
+    }
+
+    const existing = sub.ratings.find((r) => r.userEmail === userEmail);
+
+    if (existing) {
+      existing.stars = Number(stars);
+    } else {
+      sub.ratings.push({
+        userEmail,
+        stars: Number(stars),
+      });
+    }
+
+    let total = 0;
+
+    sub.ratings.forEach((r) => {
+      total += r.stars;
+    });
+
+    sub.totalRatings = sub.ratings.length;
+    sub.avgRating = total / sub.totalRatings;
+
+    await place.save();
+
+    res.json({
+      message: "Review submitted ⭐",
+      avgRating: sub.avgRating,
+      totalRatings: sub.totalRatings,
+    });
+  } catch (err) {
+    res.status(500).json({
+      message: "Server error",
+    });
+  }
+});
+
 /* =========================
    GET PLACE BY SLUG
 ========================= */
