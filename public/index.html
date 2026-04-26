@@ -4,12 +4,98 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Truly Indian</title>
+
     <link rel="stylesheet" href="/css/style-home.css" />
+
+    <style>
+      .hero {
+        text-align: center;
+        margin-bottom: 40px;
+      }
+
+      .hero h1 {
+        font-size: 42px;
+        color: #b19cd9;
+        margin-bottom: 10px;
+      }
+
+      .hero h2 {
+        font-size: 18px;
+        color: #555;
+        font-weight: 400;
+      }
+
+      .destinations {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 320px));
+        gap: 30px;
+        justify-content: center;
+        padding: 20px;
+      }
+
+      .destinations article {
+        background: white;
+        border-radius: 18px;
+        overflow: hidden;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+        transition: 0.3s ease;
+        cursor: pointer;
+      }
+
+      .destinations article:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 18px 35px rgba(0, 0, 0, 0.12);
+      }
+
+      .destinations article a {
+        text-decoration: none;
+        color: inherit;
+        display: block;
+      }
+
+      .destinations article img {
+        width: 100%;
+        height: 230px;
+        object-fit: cover;
+        display: block;
+        transition: 0.4s ease;
+      }
+
+      .destinations article:hover img {
+        transform: scale(1.06);
+      }
+
+      .destinations p {
+        padding: 18px;
+        font-size: 20px;
+        font-weight: 600;
+        text-align: center;
+        color: #333;
+      }
+
+      @media (max-width: 768px) {
+        .hero h1 {
+          font-size: 32px;
+        }
+
+        .hero h2 {
+          font-size: 16px;
+        }
+
+        .destinations {
+          gap: 20px;
+          padding: 10px;
+        }
+      }
+    </style>
   </head>
+
   <body>
     <header>
       <script src="/js/auth.js"></script>
+
       <h1>Truly Indian</h1>
+
       <nav>
         <a href="submit.html">Submit</a>
         <a href="about.html">About</a>
@@ -29,10 +115,10 @@
     </header>
 
     <main>
-      <div class="hero">
+      <section class="hero">
         <h1>Where to next?</h1>
-        <h2>Look at a few of the most famous places with the Truly Indian</h2>
-      </div>
+        <h2>Look at a few of the most famous places with Truly Indian</h2>
+      </section>
 
       <section class="destinations" id="placesContainer"></section>
 
@@ -40,18 +126,9 @@
     </main>
 
     <footer>
-      <!-- <section class = "social">
-            <p>Follow us:</p>
-            <a href="https://instagram.com/yourpage" target="_blank">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" width="30" alt="Instagram">
-            </a>  
-            <a href="https://X.com/yourpage" target="_blank">
-                <img src="https://img.freepik.com/free-vector/new-2023-twitter-logo-x-icon-design_1017-45418.jpg?t=st=1743320731~exp=1743324331~hmac=8e7f2b170e697b7988c48319c472a1ab44467e7a34e2f874c3a26b57d71aab74&w=1380" width="30" alt="X">
-            </a>
-        </section> -->
-
       <section class="Rights">
         <p>&copy; 2025 Truly Indian by HorizonWorks. All rights reserved.</p>
+
         <p>
           <a href="privacy.html" target="_blank">Privacy Policy</a> |
           <a href="terms.html" target="_blank">Terms & Conditions</a>

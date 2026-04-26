@@ -1,72 +1,234 @@
 <!doctype html>
-<html>
+<html lang="en">
   <head>
-    <title>Submit Place</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Submit Place - Truly Indian</title>
+
     <link rel="stylesheet" href="/css/style-home.css" />
+
+    <style>
+      .submit-box {
+        max-width: 700px;
+        margin: 50px auto;
+        background: white;
+        padding: 40px;
+        border-radius: 18px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+        text-align: center;
+      }
+
+      .submit-box h2 {
+        font-size: 32px;
+        color: #b19cd9;
+        margin-bottom: 30px;
+      }
+
+      .submit-box input,
+      .submit-box textarea,
+      .submit-box select {
+        width: 100%;
+        padding: 14px;
+        margin-bottom: 18px;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        font-size: 16px;
+        font-family: inherit;
+      }
+
+      .submit-box textarea {
+        height: 140px;
+        resize: vertical;
+      }
+
+      .submit-box button {
+        background: #b19cd9;
+        color: white;
+        border: none;
+        padding: 14px 28px;
+        border-radius: 10px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+
+      .submit-box button:hover {
+        background: #9b84c9;
+        transform: translateY(-2px);
+      }
+
+      hr {
+        margin: 45px 0;
+        border: none;
+        border-top: 1px solid #eee;
+      }
+
+      #message {
+        margin-top: 20px;
+        font-weight: 600;
+        color: #444;
+      }
+
+      @media (max-width: 768px) {
+        .submit-box {
+          margin: 20px;
+          padding: 25px;
+        }
+
+        .submit-box h2 {
+          font-size: 28px;
+        }
+      }
+    </style>
   </head>
+
   <body>
-    <!-- 🔐 protect page -->
     <script src="/js/auth.js"></script>
 
     <header>
-      <h1>Submit a Place</h1>
+      <h1>Truly Indian</h1>
+
       <nav>
         <a href="index.html">Home</a>
-        <a href="account.html">Account</a>
-        <button onclick="logout()" id="logoutBtn">Logout</button>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+
+        <div class="nav-right">
+          <div class="dropdown">
+            <button class="dropbtn">☰</button>
+
+            <div class="dropdown-content">
+              <a href="account.html">Account</a>
+              <button onclick="logout()">Logout</button>
+            </div>
+          </div>
+        </div>
       </nav>
     </header>
 
     <main>
-      <div class="form-box">
-        <h2>Add a New Place</h2>
+      <section class="submit-box">
+        <!-- MAIN PLACE -->
+        <h2>Add New Place</h2>
 
-        <form id="placeForm" class="form-box">
+        <form id="placeForm">
           <input type="text" id="name" placeholder="Place Name" required />
           <input type="text" id="slug" placeholder="Slug (delhi)" required />
           <input type="text" id="image" placeholder="Image URL" required />
           <textarea id="description" placeholder="Description"></textarea>
+
           <button type="submit">Add Place</button>
         </form>
 
+        <hr />
+
+        <!-- SUBPLACE -->
+        <h2>Add Subplace</h2>
+
+        <form id="subplaceForm">
+          <select id="parentPlace" required>
+            <option value="">Select City</option>
+          </select>
+
+          <input
+            type="text"
+            id="subName"
+            placeholder="Subplace Name"
+            required
+          />
+          <input type="text" id="subImage" placeholder="Image URL" required />
+          <textarea id="subDescription" placeholder="Description"></textarea>
+
+          <button type="submit">Add Subplace</button>
+        </form>
+
         <p id="message"></p>
-      </div>
+      </section>
     </main>
 
+    <footer>
+      <section class="Rights">
+        <p>&copy; 2025 Truly Indian by HorizonWorks. All rights reserved.</p>
+        <p>
+          <a href="#">Privacy Policy</a> |
+          <a href="#">Terms & Conditions</a>
+        </p>
+      </section>
+    </footer>
+
     <script>
-      const form = document.getElementById("placeForm");
+      /* MAIN PLACE */
+      document
+        .getElementById("placeForm")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
 
-      form.addEventListener("submit", async (e) => {
-        e.preventDefault();
+          const user = JSON.parse(localStorage.getItem("user"));
 
-        const user = JSON.parse(localStorage.getItem("user"));
+          const res = await fetch("/api/places", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              name: document.getElementById("name").value,
+              slug: document.getElementById("slug").value,
+              image: document.getElementById("image").value,
+              description: document.getElementById("description").value,
+              createdBy: user.email,
+            }),
+          });
 
-        if (!user) {
-          alert("Please login first");
-          window.location.href = "/login.html";
-          return;
-        }
+          const data = await res.json();
 
-        const res = await fetch("/api/places", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            name: document.getElementById("name").value,
-            slug: document.getElementById("slug").value,
-            image: document.getElementById("image").value,
-            description: document.getElementById("description").value,
-            createdBy: user.email,
-          }),
+          document.getElementById("message").innerText = data.message;
+
+          e.target.reset();
         });
 
-        const data = await res.json();
+      /* LOAD CITIES */
+      const dropdown = document.getElementById("parentPlace");
 
-        document.getElementById("message").innerText = data.message;
+      fetch("/api/places")
+        .then((res) => res.json())
+        .then((data) => {
+          data.forEach((place) => {
+            dropdown.innerHTML += `
+      <option value="${place.slug}">
+        ${place.name}
+      </option>
+    `;
+          });
+        });
 
-        form.reset();
-      });
+      /* SUBPLACE */
+      document
+        .getElementById("subplaceForm")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+
+          const user = JSON.parse(localStorage.getItem("user"));
+
+          const res = await fetch("/api/places/subplace", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              parentSlug: document.getElementById("parentPlace").value,
+              name: document.getElementById("subName").value,
+              image: document.getElementById("subImage").value,
+              description: document.getElementById("subDescription").value,
+              createdBy: user.email,
+            }),
+          });
+
+          const data = await res.json();
+
+          document.getElementById("message").innerText = data.message;
+
+          e.target.reset();
+        });
     </script>
   </body>
 </html>

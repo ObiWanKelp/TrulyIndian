@@ -1,14 +1,129 @@
 <!doctype html>
-<html>
+<html lang="en">
   <head>
-    <title>Place</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Place - Truly Indian</title>
+
     <link rel="stylesheet" href="/css/style-home.css" />
+
+    <style>
+      .place-container {
+        max-width: 1000px;
+        margin: 50px auto;
+        background: white;
+        padding: 40px;
+        border-radius: 20px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+        text-align: center;
+      }
+
+      #title {
+        font-size: 40px;
+        color: #b19cd9;
+        margin-bottom: 25px;
+      }
+
+      #image {
+        width: 100%;
+        max-width: 750px;
+        height: 420px;
+        object-fit: cover;
+        border-radius: 18px;
+        margin-bottom: 30px;
+      }
+
+      #description {
+        font-size: 18px;
+        color: #444;
+        line-height: 1.8;
+        margin-bottom: 45px;
+      }
+
+      .subplaces-title {
+        font-size: 30px;
+        color: #b19cd9;
+        margin-bottom: 25px;
+      }
+
+      .subplaces-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 320px));
+        gap: 25px;
+        justify-content: center;
+      }
+
+      .sub-card {
+        background: white;
+        border-radius: 18px;
+        overflow: hidden;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+        transition: 0.3s;
+      }
+
+      .sub-card:hover {
+        transform: translateY(-8px);
+      }
+
+      .sub-card img {
+        width: 100%;
+        height: 220px;
+        object-fit: cover;
+      }
+
+      .sub-card h3 {
+        padding: 18px 10px 5px;
+        font-size: 22px;
+      }
+
+      .sub-card p {
+        padding: 0 15px 18px;
+        color: #555;
+        font-size: 15px;
+      }
+    </style>
   </head>
+
   <body>
     <script src="/js/auth.js"></script>
-    <h1 id="title"></h1>
-    <img id="image" width="400" />
-    <p id="description"></p>
+
+    <header>
+      <h1>Truly Indian</h1>
+
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+
+        <div class="nav-right">
+          <div class="dropdown">
+            <button class="dropbtn">☰</button>
+
+            <div class="dropdown-content">
+              <a href="account.html">Account</a>
+              <button onclick="logout()">Logout</button>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <section class="place-container">
+        <h1 id="title"></h1>
+        <img id="image" />
+        <p id="description"></p>
+
+        <h2 class="subplaces-title">Top Places to Visit</h2>
+        <div id="subplaces" class="subplaces-grid"></div>
+      </section>
+    </main>
+
+    <footer>
+      <section class="Rights">
+        <p>&copy; 2025 Truly Indian by HorizonWorks. All rights reserved.</p>
+      </section>
+    </footer>
 
     <script src="/js/place.js"></script>
   </body>

@@ -1,18 +1,119 @@
 <!doctype html>
-<html>
+<html lang="en">
   <head>
-    <title>Contact Us</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact Us - Truly Indian</title>
+
     <link rel="stylesheet" href="/css/style-home.css" />
+
+    <style>
+      .contact-box {
+        max-width: 700px;
+        margin: 50px auto;
+        background: white;
+        padding: 40px;
+        border-radius: 18px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+        text-align: center;
+      }
+
+      .contact-box h2 {
+        font-size: 34px;
+        color: #b19cd9;
+        margin-bottom: 30px;
+      }
+
+      .contact-box input,
+      .contact-box textarea {
+        width: 100%;
+        padding: 14px;
+        margin-bottom: 18px;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        font-size: 16px;
+        font-family: inherit;
+      }
+
+      .contact-box textarea {
+        height: 140px;
+        resize: vertical;
+      }
+
+      .contact-box button {
+        background: #b19cd9;
+        color: white;
+        border: none;
+        padding: 14px 28px;
+        border-radius: 10px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+
+      .contact-box button:hover {
+        background: #9b84c9;
+        transform: translateY(-2px);
+      }
+
+      @media (max-width: 768px) {
+        .contact-box {
+          margin: 20px;
+          padding: 25px;
+        }
+
+        .contact-box h2 {
+          font-size: 28px;
+        }
+      }
+    </style>
   </head>
+
   <body>
     <script src="/js/auth.js"></script>
-    <h2>Contact Us</h2>
 
-    <form>
-      <input type="text" placeholder="Your Name" required /><br /><br />
-      <input type="email" placeholder="Your Email" required /><br /><br />
-      <textarea placeholder="Your Message"></textarea><br /><br />
-      <button type="submit">Send</button>
-    </form>
+    <header>
+      <h1>Truly Indian</h1>
+
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="submit.html">Submit</a>
+
+        <div class="nav-right">
+          <div class="dropdown">
+            <button class="dropbtn">☰</button>
+
+            <div class="dropdown-content">
+              <a href="account.html">Account</a>
+              <button onclick="logout()">Logout</button>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <section class="contact-box">
+        <h2>Contact Us</h2>
+
+        <form>
+          <input type="text" placeholder="Your Name" required />
+          <input type="email" placeholder="Your Email" required />
+          <textarea placeholder="Your Message"></textarea>
+          <button type="submit">Send</button>
+        </form>
+      </section>
+    </main>
+
+    <footer>
+      <section class="Rights">
+        <p>&copy; 2025 Truly Indian by HorizonWorks. All rights reserved.</p>
+        <p>
+          <a href="#">Privacy Policy</a> |
+          <a href="#">Terms & Conditions</a>
+        </p>
+      </section>
+    </footer>
   </body>
 </html>

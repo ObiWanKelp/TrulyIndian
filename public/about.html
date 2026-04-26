@@ -1,22 +1,102 @@
 <!doctype html>
-<html>
+<html lang="en">
   <head>
-    <title>About</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About - Truly Indian</title>
+
     <link rel="stylesheet" href="/css/style-home.css" />
+
+    <style>
+      .about-container {
+        max-width: 900px;
+        margin: 50px auto;
+        background: white;
+        padding: 40px;
+        border-radius: 18px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+        text-align: center;
+      }
+
+      .about-container h2 {
+        font-size: 34px;
+        color: #b19cd9;
+        margin-bottom: 25px;
+      }
+
+      .about-container p {
+        font-size: 18px;
+        line-height: 1.8;
+        color: #444;
+        margin-bottom: 20px;
+      }
+
+      @media (max-width: 768px) {
+        .about-container {
+          margin: 20px;
+          padding: 25px;
+        }
+
+        .about-container h2 {
+          font-size: 28px;
+        }
+
+        .about-container p {
+          font-size: 16px;
+        }
+      }
+    </style>
   </head>
+
   <body>
     <script src="/js/auth.js"></script>
-    <h2>About Truly Indian 🇮🇳</h2>
 
-    <p>
-      Truly Indian is a platform to explore the culture, food, and beauty of
-      India. From Delhi streets to Goa beaches, we bring real experiences to
-      you.
-    </p>
+    <header>
+      <h1>Truly Indian</h1>
 
-    <p>
-      Built as a student project to showcase web development skills + backend
-      integration.
-    </p>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="submit.html">Submit</a>
+        <a href="contact.html">Contact</a>
+
+        <div class="nav-right">
+          <div class="dropdown">
+            <button class="dropbtn">☰</button>
+
+            <div class="dropdown-content">
+              <a href="account.html">Account</a>
+              <button onclick="logout()">Logout</button>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <section class="about-container">
+        <h2>About Truly Indian 🇮🇳</h2>
+
+        <p>
+          Truly Indian is a platform to explore the culture, food, and beauty of
+          India. From Delhi streets to Goa beaches, we bring real experiences to
+          you.
+        </p>
+
+        <p>
+          Built as a student project to showcase web development skills +
+          backend integration.
+        </p>
+      </section>
+    </main>
+
+    <footer>
+      <section class="Rights">
+        <p>&copy; 2025 Truly Indian by HorizonWorks. All rights reserved.</p>
+        <p>
+          <a href="#">Privacy Policy</a> |
+          <a href="#">Terms & Conditions</a>
+        </p>
+      </section>
+    </footer>
   </body>
 </html>

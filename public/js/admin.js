@@ -1,17 +1,20 @@
-const form = document.getElementById("placeForm");
+// public/js/admin.js
 
-// LOAD DATA
+const form = document.getElementById("placeForm");
+const subplaceForm = document.getElementById("subplaceForm");
+
+/* =========================
+   INITIAL LOAD
+========================= */
 loadPending();
 loadApproved();
 
-// ===== FORM SUBMIT =====
+/* =========================
+   ADD MAIN PLACE
+========================= */
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
 
-  const name = document.getElementById("name").value;
-  const slug = document.getElementById("slug").value;
-  const image = document.getElementById("image").value;
-  const description = document.getElementById("description").value;
   const user = JSON.parse(localStorage.getItem("user"));
 
   if (!user || !user.email) {
@@ -20,117 +23,248 @@ form.addEventListener("submit", async (e) => {
     return;
   }
 
-  const res = await fetch("/api/places", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      name,
-      slug,
-      image,
-      description,
-      createdBy: user.email, // 🔥 THIS WAS MISSING
-    }),
-  });
+  const body = {
+    name: document.getElementById("name").value,
+    slug: document.getElementById("slug").value,
+    image: document.getElementById("image").value,
+    description: document.getElementById("description").value,
+    createdBy: user.email,
+  };
+
   try {
     const res = await fetch("/api/places", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ name, slug, image, description }),
+      body: JSON.stringify(body),
     });
 
     const data = await res.json();
 
-    if (!res.ok) {
-      alert(data.message || "Error ❌");
-      return;
-    }
+    alert(data.message);
 
-    alert(data.message || "Added ✅");
     form.reset();
 
-    loadPending(); // refresh without reload
+    loadPending();
     loadApproved();
   } catch (err) {
-    console.error(err);
     alert("Server error ❌");
   }
 });
 
-// ===== LOAD PENDING =====
-function loadPending() {
-  fetch("/api/places/pending")
-    .then((res) => res.json())
-    .then((places) => {
-      const container = document.getElementById("pendingList");
-      container.innerHTML = "";
+/* =========================
+   ADD SUBPLACE
+========================= */
+subplaceForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
 
-      places.forEach((p) => {
-        container.innerHTML += `
-          <div class="admin-card">
-            <img src="${p.image}">
-            <div class="admin-card-content">
-              <h3>${p.name}</h3>
-              <p>${p.description}</p>
+  const user = JSON.parse(localStorage.getItem("user"));
 
-              <div class="admin-actions">
-                <button class="approve" onclick="approve('${p._id}')">Approve</button>
-                <button class="reject" onclick="reject('${p._id}')">Reject</button>
-              </div>
-            </div>
-          </div>
-        `;
-      });
+  const body = {
+    parentSlug: document.getElementById("parentSlug").value,
+    name: document.getElementById("subName").value,
+    image: document.getElementById("subImage").value,
+    description: document.getElementById("subDescription").value,
+    createdBy: user.email,
+  };
+
+  try {
+    const res = await fetch("/api/places/subplace", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
     });
+
+    const data = await res.json();
+
+    alert(data.message);
+
+    subplaceForm.reset();
+
+    loadPending();
+  } catch (err) {
+    alert("Server error ❌");
+  }
+});
+
+/* =========================
+   LOAD PENDING
+========================= */
+async function loadPending() {
+  const container = document.getElementById("pendingList");
+  container.innerHTML = "";
+
+  /* MAIN PENDING */
+  const res1 = await fetch("/api/places/pending");
+  const places = await res1.json();
+
+  places.forEach((p) => {
+    container.innerHTML += `
+      <div class="admin-card">
+        <img src="${p.image}">
+        <div class="admin-card-content">
+          <h3>${p.name}</h3>
+          <p>${p.description}</p>
+
+          <div class="admin-actions">
+            <button class="approve" onclick="approve('${p._id}')">Approve</button>
+            <button class="reject" onclick="reject('${p._id}')">Reject</button>
+          </div>
+        </div>
+      </div>
+    `;
+  });
+
+  /* SUBPLACE PENDING */
+  const res2 = await fetch("/api/places/pending-subplaces");
+  const subplaces = await res2.json();
+
+  subplaces.forEach((p) => {
+    container.innerHTML += `
+      <div class="admin-card">
+        <img src="${p.image}">
+        <div class="admin-card-content">
+          <h3>${p.name}</h3>
+          <p>${p.description}</p>
+          <p><strong>City:</strong> ${p.parentName}</p>
+
+          <div class="admin-actions">
+            <button class="approve"
+              onclick="approveSubplace('${p.parentId}','${p._id}')">
+              Approve
+            </button>
+
+            <button class="reject"
+              onclick="rejectSubplace('${p.parentId}','${p._id}')">
+              Reject
+            </button>
+          </div>
+        </div>
+      </div>
+    `;
+  });
 }
 
-// ===== LOAD APPROVED =====
-function loadApproved() {
-  fetch("/api/places")
-    .then((res) => res.json())
-    .then((places) => {
-      const container = document.getElementById("approvedList");
-      container.innerHTML = "";
+/* =========================
+   LOAD APPROVED
+========================= */
+async function loadApproved() {
+  const res = await fetch("/api/places");
+  const places = await res.json();
 
-      places.forEach((p) => {
-        container.innerHTML += `
-          <div class="admin-card">
-            <img src="${p.image}">
-            <div class="admin-card-content">
-              <h3>${p.name}</h3>
-              <p>${p.description}</p>
+  const container = document.getElementById("approvedList");
+  container.innerHTML = "";
 
-              <div class="admin-actions">
-                <button class="delete" onclick="deletePlace('${p._id}')">Delete</button>
-              </div>
+  places.forEach((p) => {
+    let subplacesHtml = "";
+
+    if (p.subplaces && p.subplaces.length > 0) {
+      p.subplaces
+        .filter((sub) => sub.status === "approved")
+        .forEach((sub) => {
+          subplacesHtml += `
+            <div class="subplace-box">
+              <p>📍 ${sub.name}</p>
+
+              <button
+                class="delete"
+                onclick="deleteSubplace('${p._id}','${sub._id}')"
+              >
+                Remove Subplace
+              </button>
             </div>
+          `;
+        });
+    }
+
+    container.innerHTML += `
+      <div class="admin-card">
+        <img src="${p.image}" alt="${p.name}">
+
+        <div class="admin-card-content">
+          <h3>${p.name}</h3>
+          <p>${p.description}</p>
+
+          ${subplacesHtml}
+
+          <div class="admin-actions">
+            <button
+              class="delete"
+              onclick="deletePlace('${p._id}')"
+            >
+              Delete City
+            </button>
           </div>
-        `;
-      });
-    });
+        </div>
+      </div>
+    `;
+  });
+
+  if (container.innerHTML === "") {
+    container.innerHTML = "<p>No approved places yet.</p>";
+  }
 }
 
-// ===== ACTIONS =====
+/* =========================
+   ACTIONS MAIN PLACE
+========================= */
 function approve(id) {
-  fetch(`/api/places/approve/${id}`, { method: "POST" }).then(() => {
+  fetch(`/api/places/approve/${id}`, {
+    method: "POST",
+  }).then(() => {
     loadPending();
     loadApproved();
   });
 }
 
 function reject(id) {
-  fetch(`/api/places/reject/${id}`, { method: "DELETE" }).then(() =>
-    loadPending(),
-  );
+  fetch(`/api/places/reject/${id}`, {
+    method: "DELETE",
+  }).then(() => {
+    loadPending();
+  });
 }
 
 function deletePlace(id) {
   if (!confirm("Delete this place?")) return;
 
-  fetch(`/api/places/delete/${id}`, { method: "DELETE" }).then(() =>
-    loadApproved(),
-  );
+  fetch(`/api/places/delete/${id}`, {
+    method: "DELETE",
+  }).then(() => {
+    loadApproved();
+  });
+}
+
+/* =========================
+   ACTIONS SUBPLACE
+========================= */
+function approveSubplace(placeId, subId) {
+  fetch(`/api/places/approve-subplace/${placeId}/${subId}`, {
+    method: "POST",
+  }).then(() => {
+    loadPending();
+
+    loadApproved();
+  });
+}
+
+function rejectSubplace(placeId, subId) {
+  fetch(`/api/places/reject-subplace/${placeId}/${subId}`, {
+    method: "DELETE",
+  }).then(() => {
+    loadPending();
+  });
+}
+
+function deleteSubplace(placeId, subId) {
+  if (!confirm("Remove this subplace?")) return;
+
+  fetch(`/api/places/delete-subplace/${placeId}/${subId}`, {
+    method: "DELETE",
+  }).then(() => {
+    loadApproved();
+  });
 }
