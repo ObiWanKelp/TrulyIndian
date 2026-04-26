@@ -71,16 +71,15 @@
         background: #9d87cc;
         transform: translateY(-2px);
       }
-
       .admin-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 320px));
-        gap: 30px;
+        display: flex;
+        flex-wrap: wrap;
         justify-content: center;
+        gap: 28px;
         padding: 10px;
       }
-
       .admin-card {
+        width: 320px;
         background: white;
         border-radius: 18px;
         overflow: hidden;
